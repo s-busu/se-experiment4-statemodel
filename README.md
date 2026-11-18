@@ -135,8 +135,24 @@ java -jar tools/plantuml.jar -charset UTF-8 -tpng -o diagrams model/*.puml
 ### 重新生成实验报告
 
 ```bash
-python tools/gen_report.py
+python tools/gen_report.py     # 生成 202410120323-柳淳-软件工程实验四.docx
+python tools/make_doc.py       # 用本机 Word 另存为真正的 .doc（需 pywin32）
+python tools/preview.py        # 导出 PDF 并逐页出图，自检排版
 ```
+
+报告第六节的仓库地址由 `tools/gen_report.py` 顶部的 `REPO_URL` 变量决定，
+换了仓库只需改这一个常量后重新生成。
+
+### 推送到 Gitee
+
+Gitee 自 2022 年起已停用「账号 + 密码」方式的推送，需使用私人令牌：
+
+```bash
+python tools/push_to_gitee.py <你的gitee私人令牌>
+```
+
+令牌在 Gitee「设置 → 安全设置 → 私人令牌」生成，勾选 `projects` 权限。
+脚本会自动创建 `skinpipi/se-exp4-statemodel` 仓库并推送 `master` 分支。
 
 ---
 
