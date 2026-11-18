@@ -585,7 +585,7 @@ def build_report():
         "    │   ├── b1/TankState.java           // B1 状态：恒温烧水过程/待机/加热烧水/缺水保护…",
         "    │   ├── b1/TankEvent.java 等 5 个   // B1 事件：采样、时钟、水箱烧坏、维修完成",
         "    │   ├── b1/WaterTankController.java // B1 状态机的迁移表与继电器/采样控制",
-        "    │   ├── b2/PanelState.java          // B2 状态：空闲/读取键入字符/校验密码/锁定/功能选择",
+        "    │   ├── b2/PanelState.java          // B2 状态：五个状态",
         "    │   ├── b2/PanelEvent.java 等 4 个  // B2 事件：按键、校验结果、计时、功能结束",
         "    │   ├── b2/ControlPanel.java        // B2 状态机与密码输入逻辑",
         "    │   ├── b3/ScanState.java           // B3 状态：扫描普通字符/字符串内/转义/结束",
@@ -827,8 +827,8 @@ def build_report():
     add_heading(doc, "六、仓库地址")
     add_para(doc, "源代码仓库（Gitee 码云）：", bold=True, indent_first=False)
     add_para(doc, REPO_URL, indent_first=False)
-    add_para(doc, "同一份代码的备份镜像（GitHub）：", bold=True, indent_first=False)
-    add_para(doc, REPO_BACKUP_URL, indent_first=False)
+    add_para(doc, "仓库包含全部状态图源文件、Java 实现、单元测试与实验报告生成脚本，"
+                  "克隆后执行 gradle test 即可复现下表 4-8 的测试结果。", size=10.5)
     add_para(doc, "仓库内容：三张状态图的 PlantUML 源文件与导出的 PNG、"
                   "状态机引擎与三个子任务的 Java 实现、36 个 JUnit 5 单元测试、"
                   "状态图渲染脚本与实验报告生成脚本。", size=10.5)
