@@ -1,0 +1,43 @@
+@startuml B3_StringExtractor
+'==============================================================
+' 实验四 B3  源文件字符串提取状态图
+' 字符串由双引号界定；反斜杠转义其后一个字符（\ + c  ==>  c）
+' 状态别名与 Java 实现（com.hj212.experiment4.b3.ScanState）一一对应
+'==============================================================
+
+title B3  源文件字符串提取状态图
+
+skinparam shadowing false
+skinparam padding 6
+skinparam nodesep 35
+skinparam ranksep 45
+skinparam state {
+  BackgroundColor White
+  BorderColor #444444
+  ArrowColor #444444
+  FontSize 13
+}
+hide empty description
+
+state "扫描普通字符\n（字符串之外）" as Scanning
+state "字符串内\n（累积字符）" as InString
+state "转义\n（消化反斜杠）" as Escape
+
+Scanning : do / 逐字符读取源文件
+InString : do / 普通字符追加到缓冲区
+Escape : entry / 只保留被转义的字符
+
+[*] --> Scanning : 打开源文件
+
+Scanning --> InString : 读到双引号 / 清空缓冲
+Scanning --> Scanning : 其他字符
+InString --> InString : 其他字符 / 追加
+InString --> Escape : 读到反斜杠
+Escape --> InString : 任意字符 c / 追加 c
+InString --> Scanning : 读到双引号 / 输出字符串
+
+Scanning --> [*] : 源文件结束 / 输出全部结果
+InString --> [*] : 源文件结束 [未闭合] / 丢弃残片
+Escape --> [*] : 源文件结束 [未闭合] / 丢弃残片
+
+@enduml

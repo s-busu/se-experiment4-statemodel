@@ -1,0 +1,49 @@
+@startuml B2_ControlPanel
+'==============================================================
+' 实验四 B2  SafeHome 控制面板 ControlPanel 状态图
+' 密码长度 4 位；连续错误 3 次锁定；锁定 120 秒后允许重新输入
+' 状态别名与 Java 实现（com.hj212.experiment4.b2.PanelState）一一对应
+'==============================================================
+
+title B2  SafeHome 控制面板 ControlPanel 状态图
+
+skinparam shadowing false
+skinparam padding 6
+skinparam nodesep 35
+skinparam ranksep 45
+skinparam state {
+  BackgroundColor White
+  BorderColor #444444
+  ArrowColor #444444
+  FontSize 13
+}
+hide empty description
+
+state "空闲\n（等待户主操作）" as Idle
+state "读取键入字符\n（长度 4 位）" as Reading
+state "校验密码" as Verifying
+state "锁定\n（禁止输入）" as Locked
+state "系统功能选择" as Selecting
+
+Idle : entry / 显示提示，关闭键盘指示灯
+Reading : entry / 清空输入缓冲，字符数 = 0
+Reading : do / 每收到一个按键即与密码长度比较
+Verifying : entry / 输入串与系统密码比对
+Locked : entry / 启动 120 秒定时器，屏蔽按键
+Selecting : entry / 点亮功能指示灯
+
+[*] --> Idle : 上电
+
+Idle --> Reading : 按键 / 开始输入
+Reading --> Reading : 按键 [字符数<4] / 追加
+Reading --> Verifying : 按键 [字符数=4] / 提交
+
+Verifying --> Selecting : [密码正确] / 清零错误计数
+Verifying --> Reading : [密码错误，累计<3] / 计数+1
+Verifying --> Locked : [密码错误，累计=3] / 计数+1
+
+Locked --> Reading : after(120秒) / 清零计数
+
+Selecting --> Idle : [功能结束或超时]
+
+@enduml

@@ -1,0 +1,59 @@
+@startuml B1_WaterTank
+'==============================================================
+' 实验四 B1  恒温水箱（20℃ ~ 100℃）状态图
+' 建模要点：
+'   1. 三个工作子状态（待机/加热/缺水保护）用组合状态「恒温烧水过程」
+'      封装，23:00 与 07:00 的时钟事件发生在组合状态边界上，语义为
+'      「无论处于哪个子状态，11 点整都断电休眠」。
+'   2. 状态别名与 Java 实现（com.hj212.experiment4.b1.TankState）一一对应
+'==============================================================
+
+title B1  恒温水箱状态图（20℃ ~ 100℃）
+
+skinparam shadowing false
+skinparam padding 6
+skinparam nodesep 35
+skinparam ranksep 45
+skinparam state {
+  BackgroundColor White
+  BorderColor #444444
+  ArrowColor #444444
+  FontSize 13
+}
+hide empty description
+
+state "恒温烧水过程" as Working {
+
+  state "待机\n（继电器断开）" as Idle
+  state "加热烧水\n（继电器闭合）" as Heating
+  state "缺水保护\n（不打开电源）" as NoWater
+
+  [*] --> Idle
+
+  Idle --> Heating : 温度<20℃ [有水] / 通电
+  Idle --> NoWater : 温度<20℃ [无水]
+  NoWater --> Heating : 温度<20℃ [已注水] / 通电
+  NoWater --> Idle : 温度≥20℃
+  Heating --> Idle : 温度达到100℃ / 断电
+  Heating --> NoWater : [加热中无水] / 断电
+}
+
+state "休眠\n（电源断开）" as Sleep
+state "故障维修\n（水箱烧坏）" as Repair
+
+Working : entry / 启动温度与水量采样
+Idle : entry / 断开继电器电源
+Heating : entry / 打开继电器电源
+NoWater : entry / 保持断电并提示加水
+Sleep : entry / 断开电源，停止采样
+Repair : entry / 停机报警，等待维修
+
+[*] --> Working : 系统启动
+
+Working --> Sleep : 23:00 / 断电休眠
+Sleep --> Working : 07:00 / 恢复烧水
+
+Heating --> Repair : 水箱烧坏
+Repair --> Working : 维修完成
+
+@enduml
