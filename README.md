@@ -143,16 +143,19 @@ python tools/preview.py        # 导出 PDF 并逐页出图，自检排版
 报告第六节的仓库地址由 `tools/gen_report.py` 顶部的 `REPO_URL` 变量决定，
 换了仓库只需改这一个常量后重新生成。
 
-### 推送到 Gitee
+---
 
-Gitee 自 2022 年起已停用「账号 + 密码」方式的推送，需使用私人令牌：
+## 七、代码托管
+
+公开仓库：<https://github.com/s-busu/se-experiment4-statemodel>
+
+> 本机访问 github.com:22 会超时，SSH 需走 443 端口：
 
 ```bash
-python tools/push_to_gitee.py <你的gitee私人令牌>
+git remote add origin ssh://git@ssh.github.com:443/s-busu/se-experiment4-statemodel.git
+git config core.sshCommand "ssh -i D:/git/.ssh/id_ed25519_github"
+git push -u origin master:main
 ```
-
-令牌在 Gitee「设置 → 安全设置 → 私人令牌」生成，勾选 `projects` 权限。
-脚本会自动创建 `skinpipi/se-exp4-statemodel` 仓库并推送 `master` 分支。
 
 ---
 

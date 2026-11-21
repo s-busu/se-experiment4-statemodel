@@ -24,3 +24,6 @@ page.html
 # 系统文件
 Thumbs.db
 .DS_Store
+
+# Word 临时锁文件
+~$*

@@ -28,8 +28,8 @@ COLLEGE = "计算机与信息学院"
 MAJOR = "软件工程"
 LAB = "软件工程实验室"
 EXPERIMENT_DATE = "2026 年 11 月 18 日"
-REPO_URL = "https://gitee.com/skinpipi/se-exp4-statemodel"
-REPO_BACKUP_URL = "https://github.com/s-busu/se-experiment4-statemodel"
+REPO_URL = "https://github.com/s-busu/se-experiment4-statemodel"
+REPO_URL_GITEE = "https://gitee.com/skinpipi/se-exp4-statemodel"  # 备用（未推送）
 
 # 模板正文可用宽度：21.0 - 3.175*2 = 14.65 cm
 CONTENT_W = 14.6
@@ -407,7 +407,7 @@ def build_report():
                   "（按 UML 2.5 语义绘制状态图并导出 PNG）；")
     add_para(doc, "实现语言：Java（JDK 1.8.0_131），采用表驱动的分层状态机实现；")
     add_para(doc, "构建工具：Gradle 7.6.4；测试框架：JUnit 5.8.2；")
-    add_para(doc, "版本管理：Git 2.55.0 + Gitee（码云）；")
+    add_para(doc, "版本管理：Git 2.55.0 + GitHub 公开仓库；")
     add_para(doc, "操作系统：Windows 11（64 位）。")
 
     # ---------- 三、实验要求 ----------
@@ -825,10 +825,11 @@ def build_report():
 
     # ---------- 六、仓库地址 ----------
     add_heading(doc, "六、仓库地址")
-    add_para(doc, "源代码仓库（Gitee 码云）：", bold=True, indent_first=False)
+    add_para(doc, "源代码仓库（GitHub 公开仓库）：", bold=True, indent_first=False)
     add_para(doc, REPO_URL, indent_first=False)
-    add_para(doc, "仓库包含全部状态图源文件、Java 实现、单元测试与实验报告生成脚本，"
-                  "克隆后执行 gradle test 即可复现下表 4-8 的测试结果。", size=10.5)
+    add_para(doc, "该仓库为公开仓库，无需登录即可浏览与克隆；仓库包含全部状态图源文件、"
+                  "Java 实现、单元测试与实验报告生成脚本，克隆后执行 gradle test "
+                  "即可复现表 4-8 的测试结果。", size=10.5)
     add_para(doc, "仓库内容：三张状态图的 PlantUML 源文件与导出的 PNG、"
                   "状态机引擎与三个子任务的 Java 实现、36 个 JUnit 5 单元测试、"
                   "状态图渲染脚本与实验报告生成脚本。", size=10.5)
