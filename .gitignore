@@ -15,9 +15,8 @@ code/.gradle/
 # 工具与临时文件
 tools/plantuml.jar
 tools/__pycache__/
-tools/preview.pdf
-tools/p[0-9][0-9].png
-tools/q[0-9][0-9].png
+tools/preview*.pdf
+tools/*.png
 tools/run-output.txt
 page.html
 
